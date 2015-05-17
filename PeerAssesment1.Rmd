@@ -1,0 +1,51 @@
+---
+title: "PeerAssesment1"
+author: "Padma Akkiraju"
+date: "Sunday, May 17, 2015"
+output: html_document
+---
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+
+```{r}
+library(dplyr)
+library(ggplot2)
+mycsv <- read.csv("activity.csv")
+mynonacsv<-mycsv[!is.na(mycsv$steps),]
+mydf <- data.frame()
+mydf <- rbind(mydf,mynonacsv)
+mydfcopy<- mydf
+
+mygrpcsv<-group_by(mydf,date)
+mystepsSumPerDate <- summarize(mygrpcsv,stepsSum=sum(steps))
+mystepsMeanPerDate<-summarize(mygrpcsv,stepsMean=mean(steps))
+mystepsMedianPerDate <- summarize(mygrpcsv,stepsMedian=median(steps))
+summarize(mydf,mean(steps))
+summarize(mydf,median(steps))
+mynonacsvgroupbyinterval<- group_by(mynonacsv,interval)
+myintervalstepmean<- summarize(mynonacsvgroupbyinterval,stepmean=mean(steps))
+max(myintervalstepmean$stepmean)
+sum(is.na(mycsv))
+stepmean <- summarize(mydf,mean(steps))
+
+mydfcopymutated <- mutate(mydfcopy, dayname=weekdays(as.POSIXct(mydf$date)))
+mydfbyday <- group_by(mydfcopymutated,interval)
+mydfbyday1 <- summarize(mydfbyday,stepmean=mean(steps))
+```
+
+You can also embed plots, for example:
+
+```{r, echo=FALSE}
+ggplot(data=mystepsSumPerDate,aes(x=date,y=stepsSum))+geom_histogram(stat="identity",colour="green")
+plot(mystepsMeanPerDate)
+plot(mystepsMedianPerDate)
+ggplot(data=myintervalstepmean, aes(x=interval,y=stepmean))+geom_line(stat="identity",color="red")
+as.POSIXxt(my)
+sp <- ggplot(data=myintervalstepmean, aes(x=interval,y=stepmean))+geom_line(stat="identity",color="red")
+sp + facet_grid(dayname ~ .)
+
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
