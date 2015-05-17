@@ -12,6 +12,7 @@ When you click the **Knit** button a document will be generated that includes bo
 ```{r}
 library(dplyr)
 library(ggplot2)
+
 mycsv <- read.csv("activity.csv")
 mynonacsv<-mycsv[!is.na(mycsv$steps),]
 mydf <- data.frame()
@@ -42,9 +43,7 @@ ggplot(data=mystepsSumPerDate,aes(x=date,y=stepsSum))+geom_histogram(stat="ident
 plot(mystepsMeanPerDate)
 plot(mystepsMedianPerDate)
 ggplot(data=myintervalstepmean, aes(x=interval,y=stepmean))+geom_line(stat="identity",color="red")
-as.POSIXxt(my)
-sp <- ggplot(data=myintervalstepmean, aes(x=interval,y=stepmean))+geom_line(stat="identity",color="red")
-sp + facet_grid(dayname ~ .)
+
 
 ```
 
